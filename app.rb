@@ -37,9 +37,27 @@ def get_meetup_info(meetup_id)
   Meetup.where(id: meetup_id).first
 end
 
+def create_new_meetup(name, desc, location)
+  Meetup.create(name: name, description: desc, location: location)
+end
+
+def get_meetup_by_name(name)
+  Meetup.where(name: name).first
+end
+
+def join_meetup(user_id, meetup_id)
+  UserMeetup.create(user_id: user_id, meetup_id: meetup_id)
+end
+
+def groups_joined
+  current_user.meetups
+end
+
 # ------------------------------------------ Routes ------------------------------------------
 
 get '/' do
+  @joined = groups_joined
+  @signed_in = signed_in?
   @meetups = get_meetups.order(name: :asc)
   erb :index
 end
@@ -68,4 +86,18 @@ end
 
 get '/example_protected_page' do
   authenticate!
+end
+
+post '/' do
+  create_new_meetup(params[:meetup_name], params[:description], params[:location])
+  id = get_meetup_by_name(params["meetup_name"]).id
+  flash[:notice] = "Your Meetup has been submitted"
+  redirect "/meetup/#{id}"
+end
+
+post '/meetup/:id' do
+  join_meetup(session[:user_id], params[:id])
+
+  flash[:notice] = "You have joined this group"
+  redirect '/'
 end

@@ -38,3 +38,11 @@ a:visited {
   padding: 1em;
   background-color: #3B9089;
 }
+
+#blk{
+  color: black !important;
+}
+
+input {
+  margin-bottom: 10px;
+}

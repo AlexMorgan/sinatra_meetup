@@ -1,7 +1,29 @@
-<h1><%= @title %></h1>
+<h1>SpaceMeetup</h1>
 
 <ul>
   <% @meetups.each do |m| %>
     <li><a href="/meetup/<%= m.id %>"><%= m.name%></a></li>
   <% end %>
 </ul>
+
+
+<% if @signed_in %>
+  <h3>Joined:</h3>
+  <% @joined.each do |group| %>
+    <li><%= group.name %></li>
+  <% end %>
+
+  <h2>Create new Meetup</h2>
+  <form method="post" action="/" id="blk">
+    <div>
+      <input placeholder="Enter meetup name" name="meetup_name">
+    </div>
+    <div>
+      <input type="text" placeholder="Enter location" name="location">
+    </div>
+    <div>
+      <input placeholder="Enter description" name="description">
+    </div>
+    <input type="submit">
+  </form>
+<% end %>
