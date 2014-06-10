@@ -2,7 +2,6 @@
 
 <ul>
   <% @meetups.each do |m| %>
-    <% binding.pry %>
-    <li><a href="/meetups/<% m.id %>"><%= m.name%></a></li>
+    <li><a href="/meetup/<%= m.id %>"><%= m.name%></a></li>
   <% end %>
 </ul>

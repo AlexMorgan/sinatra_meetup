@@ -33,9 +33,20 @@ def get_meetups
   Meetup.all
 end
 
+def get_meetup_info(meetup_id)
+  Meetup.where(id: meetup_id).first
+end
+
+# ------------------------------------------ Routes ------------------------------------------
+
 get '/' do
   @meetups = get_meetups.order(name: :asc)
   erb :index
+end
+
+get '/meetup/:id' do
+  @meetup = get_meetup_info(params[:id])
+  erb :meetup
 end
 
 get '/auth/github/callback' do
