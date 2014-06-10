@@ -16,6 +16,7 @@ configure do
 
   use OmniAuth::Builder do
     provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
+      # Grants read access to a user’s email addresses
       scope: 'user:email'
   end
 end
