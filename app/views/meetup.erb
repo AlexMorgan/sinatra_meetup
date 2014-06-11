@@ -4,7 +4,7 @@
 <h2>Location: <%= @meetup.location %></h2>
 <br>
 <br>
-<% if @comments != nil %>
+<% if @comments != [] %>
   <h1>Comments:</h1>
   <% @comments.each do |c| %>
     <div class="comment">
@@ -13,6 +13,8 @@
       <cite>Date: <%= c.created_at %></cite>
     </div>
   <% end %>
+<% else %>
+  <p>There are currently no comments...</p>
 <% end %>
 <br>
 <br>

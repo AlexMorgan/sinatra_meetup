@@ -30,6 +30,8 @@ def authenticate!
   end
 end
 
+
+# ------------------------------------------ My methods ------------------------------------------
 def get_meetups
   Meetup.all
 end
@@ -54,6 +56,14 @@ def leave_meetup(user_id, meetup_id)
   record = UserMeetup.find_by(user_id: user_id, meetup_id: meetup_id)
   record.destroy
 end
+
+# def display_members(meetup_id)
+#   members = UserMeetup.where(meetup_id: meetup_id)
+#   members.each do |m|
+#     puts User.where(id: m.id)
+#     binding.pry
+#   end
+# end
 
 def groups_joined
   if signed_in?
