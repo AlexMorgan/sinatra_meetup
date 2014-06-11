@@ -65,6 +65,15 @@ def member_of_group
   groups = current_user.meetups.map { |meet| meet.id }
 end
 
+def post_comment(title, body, meetup_id)
+  Comment.create(title: title, body: body, meetup_id: meetup_id)
+end
+
+def read_comments(id)
+  comments = Comment.where(meetup_id: id)
+  comments.order(created_at: :asc)
+end
+
 # ------------------------------------------ Routes ------------------------------------------
 get '/' do
   @joined = groups_joined
@@ -74,6 +83,7 @@ get '/' do
 end
 
 get '/meetup/:id' do
+  @comments = read_comments(params[:id])
   @member_of_group = member_of_group
   @signed_in = signed_in?
   @meetup = get_meetup_info(params[:id])
@@ -112,7 +122,7 @@ post '/meetup/join/:id' do
   join_meetup(session[:user_id], params[:id])
 
   flash[:notice] = "You have joined this group"
-  redirect '/'
+  redirect "/meetup/#{params[:id]}"
 end
 
 post '/meetup/leave/:id' do
@@ -120,4 +130,11 @@ post '/meetup/leave/:id' do
 
   flash[:notice] = "You have left this group"
   redirect '/'
+end
+
+post '/meetup/comment/:id' do
+  post_comment(params[:comment_title], params[:comment_body], params[:id])
+
+  flash[:notice] = "Your comment has been submitted"
+  redirect "/meetup/#{params[:id]}"
 end

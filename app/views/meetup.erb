@@ -2,6 +2,15 @@
 
 <h2><%= @meetup.description %></h2>
 <h2><%= @meetup.location %></h2>
+<br>
+<br>
+<% if @comments != nil %>
+  <h1>Comments:</h1>
+  <% @comments.each do |c| %>
+    <p><%= c.title %></p>
+    <cite><%= c.body %></cite>
+  <% end %>
+<% end %>
 
 <% if @signed_in %>
   <% if !@member_of_group.include?(@meetup.id) %>
@@ -9,7 +18,7 @@
       <input type="submit" value="Join!">
     </form>
   <% else %>
-    <form action="/meetup/comment/<%= meetup.id %>" method="post">
+    <form id="blk"action="/meetup/comment/<%= @meetup.id %>" method="post">
       <input type="text" name="comment_title" placeholder="Enter comment title">
       <input type="text" name="comment_body" placeholder="Enter comment content" required>
       <input type="submit" value="Submit">
