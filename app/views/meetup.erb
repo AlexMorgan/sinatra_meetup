@@ -18,8 +18,17 @@
 <% end %>
 <br>
 <br>
+<h1>Members:</h1>
+<% @members_of_group.each do |m| %>
+  <div class="members">
+    <img class="profile-img" src="<%= m.avatar_url %>"><cite class="profile-name"><%= m.username %></cite>
+  </div>
+<% end %>
+<br>
+<br>
+
 <% if @signed_in %>
-  <% if !@member_of_group.include?(@meetup.id) %>
+  <% if !@existing_member %>
     <form action="/meetup/join/<%= @meetup.id %>" method="post">
       <input type="submit" value="Join!">
     </form>

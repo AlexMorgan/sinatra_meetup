@@ -72,9 +72,7 @@ def groups_joined
 end
 
 def member_of_group
-  if signed_in?
-    groups = current_user.meetups.map { |meet| meet.id }
-  end
+  groups = current_user.meetups.map { |meet| meet.id }
 end
 
 def post_comment(title, body, meetup_id)
@@ -86,6 +84,13 @@ def read_comments(id)
   comments.order(created_at: :desc)
 end
 
+def existing_member?(user,id)
+  meetup = Meetup.find(id)
+  existing_members = meetup.users
+  existing_members = existing_members.map { |m| m.id }
+  existing_members.include?(user)
+end
+
 # ------------------------------------------ Routes ------------------------------------------
 get '/' do
   @joined = groups_joined
@@ -95,10 +100,12 @@ get '/' do
 end
 
 get '/meetup/:id' do
-  @comments = read_comments(params[:id])
-  @member_of_group = member_of_group
+  @meetup = Meetup.find(params[:id])
+  @comments = @meetup.comments.order(created_at: :desc)
+  @members_of_group = @meetup.users
+  @existing_member = existing_member?(session[:user_id], params[:id])
   @signed_in = signed_in?
-  @meetup = get_meetup_info(params[:id])
+
   erb :meetup
 end
 

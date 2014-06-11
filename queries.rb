@@ -8,7 +8,9 @@ Meetup.create(name: 'Does it add rows that are false', description: 'This is a t
 
 UserMeetup.create(user_id: 1, meetup_id: 1)
 
-UserMeetup.create(user_id: 1, meetup_id: 2)
+UserMeetup.create(user_id: 4, meetup_id: 4)
+UserMeetup.create(user_id: 5, meetup_id: 15)
+
 
 
 

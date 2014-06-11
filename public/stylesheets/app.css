@@ -57,3 +57,13 @@ input {
   margin-bottom: 20px;
 }
 
+.profile-img {
+  border-radius: 150px;
+  border: 1px solid white;
+  height: 30px;
+  width: 30px;
+}
+
+.members {
+  margin-bottom: 10px;
+}
