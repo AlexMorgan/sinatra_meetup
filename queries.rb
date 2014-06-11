@@ -1,4 +1,4 @@
-user = User.create(provider: 'github', uid: '564738', email:'alex@gmail.com', username: 'AlexMorgan', avatar_url: 'safasduuefa.com')
+user = User.create(provider: 'github', uid: '5647381', email:'omid@gmail.com', username: 'OmidBachari', avatar_url: 'https://s3.amazonaws.com/Launchers/Omid-Bachari.jpg')
 
 Meetup.create(name: 'Testing ActiveRecord', description: 'This is a test to make sure I know what whats going on', location: '53 Harrison Ave.')
 

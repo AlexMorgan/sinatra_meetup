@@ -6,23 +6,22 @@
   <% end %>
 </ul>
 
-
 <% if @signed_in %>
   <h3>Joined:</h3>
   <% @joined.each do |group| %>
-    <li><%= group.name %></li>
+    <li> <a href="/meetup/<%= group.id %>"><%= group.name %></a></li>
   <% end %>
 
   <h2>Create new Meetup</h2>
   <form method="post" action="/" id="blk">
     <div>
-      <input placeholder="Enter meetup name" name="meetup_name">
+      <input placeholder="Enter meetup name" name="meetup_name" required>
     </div>
     <div>
-      <input type="text" placeholder="Enter location" name="location">
+      <input type="text" placeholder="Enter location" name="location" required>
     </div>
     <div>
-      <input placeholder="Enter description" name="description">
+      <input placeholder="Enter description" name="description" required>
     </div>
     <input type="submit">
   </form>

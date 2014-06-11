@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'omniauth-github'
+require 'pry'
 
 require_relative 'config/application'
 
@@ -49,12 +50,22 @@ def join_meetup(user_id, meetup_id)
   UserMeetup.create(user_id: user_id, meetup_id: meetup_id)
 end
 
+def leave_meetup(user_id, meetup_id)
+  record = UserMeetup.find_by(user_id: user_id, meetup_id: meetup_id)
+  record.destroy
+end
+
 def groups_joined
-  current_user.meetups
+  if signed_in?
+    current_user.meetups
+  end
+end
+
+def member_of_group
+  groups = current_user.meetups.map { |meet| meet.id }
 end
 
 # ------------------------------------------ Routes ------------------------------------------
-
 get '/' do
   @joined = groups_joined
   @signed_in = signed_in?
@@ -63,6 +74,8 @@ get '/' do
 end
 
 get '/meetup/:id' do
+  @member_of_group = member_of_group
+  @signed_in = signed_in?
   @meetup = get_meetup_info(params[:id])
   erb :meetup
 end
@@ -95,9 +108,16 @@ post '/' do
   redirect "/meetup/#{id}"
 end
 
-post '/meetup/:id' do
+post '/meetup/join/:id' do
   join_meetup(session[:user_id], params[:id])
 
   flash[:notice] = "You have joined this group"
+  redirect '/'
+end
+
+post '/meetup/leave/:id' do
+  leave_meetup(session[:user_id], params[:id])
+
+  flash[:notice] = "You have left this group"
   redirect '/'
 end
