@@ -62,7 +62,9 @@ def groups_joined
 end
 
 def member_of_group
-  groups = current_user.meetups.map { |meet| meet.id }
+  if signed_in?
+    groups = current_user.meetups.map { |meet| meet.id }
+  end
 end
 
 def post_comment(title, body, meetup_id)
@@ -71,7 +73,7 @@ end
 
 def read_comments(id)
   comments = Comment.where(meetup_id: id)
-  comments.order(created_at: :asc)
+  comments.order(created_at: :desc)
 end
 
 # ------------------------------------------ Routes ------------------------------------------

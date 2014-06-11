@@ -1,17 +1,21 @@
 <h1><%= @meetup.name %></h1>
 
-<h2><%= @meetup.description %></h2>
-<h2><%= @meetup.location %></h2>
+<h2>Information: <%= @meetup.description %></h2>
+<h2>Location: <%= @meetup.location %></h2>
 <br>
 <br>
 <% if @comments != nil %>
   <h1>Comments:</h1>
   <% @comments.each do |c| %>
-    <p><%= c.title %></p>
-    <cite><%= c.body %></cite>
+    <div class="comment">
+      <h3><%= c.title %></h3>
+      <cite><%= c.body %></cite>
+      <cite>Date: <%= c.created_at %></cite>
+    </div>
   <% end %>
 <% end %>
-
+<br>
+<br>
 <% if @signed_in %>
   <% if !@member_of_group.include?(@meetup.id) %>
     <form action="/meetup/join/<%= @meetup.id %>" method="post">
